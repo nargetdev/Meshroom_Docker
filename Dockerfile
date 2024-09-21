@@ -40,7 +40,7 @@ RUN apt update && apt upgrade -y
 # -----------------------------------------------------------------------------
 FROM base AS base_devel
 RUN apt install -y git cmake build-essential \
-				   autoconf libtool nasm automake gfortran-12
+				  autoconf libtool nasm automake gfortran-12
 
 
 # add cuda repo
@@ -75,14 +75,14 @@ FROM base_devel_with_cuda_toolkit AS build_av
 #   libpcre2-dev libbison-dev  # required by SWIG
 #   libxerces-c-dev  # required by E57Format
 RUN apt install -y zlib1g-dev liblz4-dev libpcre2-dev libbison-dev \
-				   libxerces-c-dev pkg-config
+				  libxerces-c-dev pkg-config
 
 # dependencies of OpenImageIO, it compiles without them but I install them
 # anyway to prevent poGIN_PATH="/opt/QtAtential issues when importing files types into Meshroom
 # that I normally don't use (and therefore haven't tested)
 RUN apt install -y libopenjp2-7-dev libopenvdb-dev libgif-dev libheif-dev \
-				   libdcmtk-dev libfreetype-dev librust-bzip2-dev \
-				   libopencolorio-dev libwebp-dev
+				  libdcmtk-dev libfreetype-dev librust-bzip2-dev \
+				  libopencolorio-dev libwebp-dev
 
 # cmake doesn't find the fortran compiler by itself when building lapack
 ENV FC=/usr/bin/gfortran-12
@@ -97,11 +97,6 @@ WORKDIR /build_directory/AliceVision/AliceVision
 ARG ALICEVISION_COMMIT=62ab2b5
 RUN git checkout ${ALICEVISION_COMMIT}
 RUN git submodule update -i
-
-# cctag v1.0.3 which is used by AliceVision wants to compile for cuda 3.5 and 3.7,
-# they are no longer supported in cuda 12.6 --> remove them
-# COPY fix_cctag_cuda_version_list.patch /build_directory/AliceVision
-# RUN git apply -C1 ../fix_cctag_cuda_version_list.patch
 
 # AliceVision uses CCTag v1.0.3 which want to compile for compute architectures
 # 3.5 and 3.7, they are no longer supported in cuda 12.6; on newer systems like
@@ -134,9 +129,9 @@ WORKDIR /build_directory/AliceVision/build
 ARG njobs=1
 ARG CPU_ARCHITECTURE=auto
 RUN cmake -DALICEVISION_BUILD_DEPENDENCIES=ON -DAV_BUILD_POPSIFT=OFF \
-		  -DAV_USE_OPENMP=ON -DTARGET_ARCHITECTURE=${CPU_ARCHITECTURE} \
-		  -DAV_BUILD_DEPENDENCIES_PARALLEL=${njobs} \
-		  -DCMAKE_INSTALL_PREFIX=/usr/local -LH ../AliceVision
+		 -DAV_USE_OPENMP=ON -DTARGET_ARCHITECTURE=${CPU_ARCHITECTURE} \
+		 -DAV_BUILD_DEPENDENCIES_PARALLEL=${njobs} \
+		 -DCMAKE_INSTALL_PREFIX=/usr/local -LH ../AliceVision
 
 ARG njobs_multiplier=1
 RUN cmake --build . --parallel ${njobs_multiplier}
@@ -147,7 +142,7 @@ RUN cmake --build . --parallel ${njobs_multiplier}
 FROM build_av AS build_qtav
 
 RUN apt install -y qtbase5-dev qtdeclarative5-dev qt3d5-dev \
-				   libqt5waylandclient5-dev libqt5charts5-dev
+				  libqt5waylandclient5-dev libqt5charts5-dev
 
 WORKDIR /build_directory/QtAliceVision
 RUN git clone https://github.com/alicevision/QtAliceVision.git
@@ -158,8 +153,8 @@ RUN git checkout ${QTALICEVISION_COMMIT}
 
 WORKDIR /build_directory/QtAliceVision/build
 RUN cmake -DCMAKE_INSTALL_PREFIX=/opt/QtAliceVision \
-		  -DCMAKE_BUILD_TYPE=Release \
-		  ../QtAliceVision
+		 -DCMAKE_BUILD_TYPE=Release \
+		 ../QtAliceVision
 
 ARG njobs=1
 RUN cmake --build . --parallel ${njobs}
@@ -182,7 +177,7 @@ ADD https://gitlab.com/alicevision/semanticSegmentationModel/-/raw/main/fcn_resn
 FROM base_devel AS build_python
 
 RUN apt install -y libffi-dev liblzma-dev libsqlite3-dev libreadline-dev \
-				   libncurses-dev zlib1g-dev libbz2-dev libssl-dev openssl
+				  libncurses-dev zlib1g-dev libbz2-dev libssl-dev openssl
 
 WORKDIR /build_directory
 ADD https://www.python.org/ftp/python/3.10.13/Python-3.10.13.tgz .
@@ -202,7 +197,7 @@ RUN pip3 install numpy==1.26.4
 # -----------------------------------------------------------------------------
 FROM base_devel_with_nvidia_repos AS base_devel_with_cuda_runtime
 RUN apt install -y cuda-cudart-12-6 libcusolver-12-6 libcublas-12-6 \
-				   libcusparse-12-6 libnvjitlink-12-6
+				  libcusparse-12-6 libnvjitlink-12-6
 
 
 # download Meshroom
@@ -228,8 +223,8 @@ FROM base AS runtime
 RUN apt install -y libssl3 libgfortran5 libqt5gui5 libgomp1 libimath-3-1-29
 
 RUN apt install -y libopenjp2-7 libopenvdb10.0 libgif7 libheif1 \
-				   libdcmtk17 libfreetype6 bzip2 \
-				   libopencolorio2.1 libwebp7 libwebpdemux2
+				  libdcmtk17 libfreetype6 bzip2 \
+				  libopencolorio2.1 libwebp7 libwebpdemux2
 
 # not sure if we need those ...
 RUN apt install -y zlib1g liblz4-1 libpcre2-32-0 bison libxerces-c3.2
@@ -251,8 +246,8 @@ ENV QML2_IMPORT_PATH="/opt/QtAliceVision/qml"
 WORKDIR /opt/AliceVisionData
 COPY --from=build_av /build_directory/AliceVision/AliceVision/src/aliceVision/sensorDB/cameraSensors.db .
 COPY --from=download_av_data /AliceVisionData/vlfeat_K80L3.SIFT.tree \
-							 /AliceVisionData/sphereDetection_Mask-RCNN.onnx \
-							 /AliceVisionData/fcn_resnet50.onnx .
+							/AliceVisionData/sphereDetection_Mask-RCNN.onnx \
+							/AliceVisionData/fcn_resnet50.onnx .
 
 # copy over Meshroom
 COPY --from=download_meshroom /opt/Meshroom /opt/Meshroom
