@@ -1,0 +1,12 @@
+diff --git a/src/cmake/Dependencies.cmake b/src/cmake/Dependencies.cmake
+index 1efae6a0f..01d8148df 100644
+--- a/src/cmake/Dependencies.cmake
++++ b/src/cmake/Dependencies.cmake
+@@ -1401,6 +1401,7 @@ set(AV_DEPS
+ if(AV_BUILD_ALICEVISION)
+     # Build Alicevision super build mode
+     ExternalProject_Add(aliceVision
++        BUILD_COMMAND $(MAKE) -j${AV_BUILD_DEPENDENCIES_PARALLEL}
+         PREFIX ${CMAKE_CURRENT_SOURCE_DIR}
+         BUILD_IN_SOURCE 0
+         BUILD_ALWAYS 1

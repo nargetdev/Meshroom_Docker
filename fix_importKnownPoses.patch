@@ -1,0 +1,13 @@
+diff --git a/src/software/convert/main_importKnownPoses.cpp b/src/software/convert/main_importKnownPoses.cpp
+index 1544f0128..7e23156a7 100644
+--- a/src/software/convert/main_importKnownPoses.cpp
++++ b/src/software/convert/main_importKnownPoses.cpp
+@@ -369,7 +369,7 @@ int aliceVision_main(int argc, char** argv)
+                 Vec3 up_vec(up[0], up[1], up[2]);
+                 Vec3 forward_vec(forward[0], forward[1], forward[2]);
+ 
+-                rot.row(0) = up_vec.cross(forward_vec);
++                rot.row(0) = -up_vec.cross(forward_vec);
+                 rot.row(1) = -up_vec;
+                 rot.row(2) = forward_vec;
+                 // we store this new information into a pose3

@@ -1,0 +1,15 @@
+diff --git a/meshroom/ui/qml/Viewer3D/Viewer3DSettings.qml b/meshroom/ui/qml/Viewer3D/Viewer3DSettings.qml
+index 084b9979..6e8d2d3c 100644
+--- a/meshroom/ui/qml/Viewer3D/Viewer3DSettings.qml
++++ b/meshroom/ui/qml/Viewer3D/Viewer3DSettings.qml
+@@ -47,8 +47,8 @@ Item {
+     property real cameraScale: 0.3
+     // Helpers display
+     property bool displayGrid: true
+-    property bool displayGizmo: true
+-    property bool displayOrigin: false
++    property bool displayGizmo: false
++    property bool displayOrigin: true
+     // Camera
+     property bool syncViewpointCamera: false
+     property bool syncWithPickedViewId: false  // Sync active camera with picked view ID from sequence player if the setting is enabled

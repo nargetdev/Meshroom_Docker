@@ -1,0 +1,15 @@
+diff --git a/src/cmake/Dependencies.cmake b/src/cmake/Dependencies.cmake
+index 1efae6a0f..cfcfc5599 100644
+--- a/src/cmake/Dependencies.cmake
++++ b/src/cmake/Dependencies.cmake
+@@ -1046,8 +1046,8 @@ if(AV_BUILD_CCTAG)
+     set(CCTAG_TARGET cctag)
+ 
+     ExternalProject_Add(${CCTAG_TARGET}
+-        GIT_REPOSITORY https://github.com/alicevision/CCTag
+-        GIT_TAG v1.0.3
++        GIT_REPOSITORY https://github.com/mpr-projects/CCTag
++        GIT_TAG 0cc8992
+         PREFIX ${BUILD_DIR}
+         BUILD_IN_SOURCE 0
+         BUILD_ALWAYS 0
