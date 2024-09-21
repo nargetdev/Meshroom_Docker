@@ -24,7 +24,7 @@ Since Meshroom runs in a container it can't access programs on your host system.
 
 ## Which Adjustments Have I Made?
 I've applied a few patches to Meshroom/AliceVision:
-- CCTags don't seem to build correctly on newer OSs (at least on my two computers). I've added a patch to implement the workaround I described [here](https://github.com/alicevision/CCTag/issues/219).
+- CCTags doesn't seem to build correctly on newer OSs (at least not on my two computers). I've added a patch to implement the workaround I described [here](https://github.com/alicevision/CCTag/issues/219). The patch causes AliceVision to clone my fork of CCTags, which includes the workaround.
 - I've changed one of AliceVision's CMake files to use parallel building for both, building dependencies and building AliceVision (see the comments in the Dockerfile for more details).
 - I've added a patch for what I think is an error in the file *main_importKnownPoses.cpp*, see the github issue I raised about it here (Todo: add link).
 - I've done a slight change to Meshroom's GUI, disabling the Gizmo/Trackball (which I never use) and instead enabling the Origin.
