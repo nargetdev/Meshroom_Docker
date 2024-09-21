@@ -1,5 +1,6 @@
 # Dockerfile for Building and Running Meshroom
 This repository contains a Dockerfile for building and running [Meshroom](https://github.com/alicevision/meshroom/) and its dependencies in a Docker container. Meshroom is a program that can be used for 3D reconstructions. The program itself is really just the graphical interface for the reconstruction pipeline which is implemented by the program(s) called [AliceVision](https://github.com/alicevision/AliceVision). The version built here currently uses AliceVision's git commit 62ab2b5 from 29. August 2024. It supports pretty much all features that Meshroom can currently offer, GPU, CCTags, Lidar, etc ... It also includes some adjustments I've made, which are partly described in this video:
+
 [![Watch the video](https://img.youtube.com/vi/XUKu1apUuVE/hqdefault.jpg)](https://www.youtube.com/embed/XUKu1apUuVE)
 
 ## Why Docker?
