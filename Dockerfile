@@ -11,6 +11,14 @@
 # 'njobs_multiplier' dependencies are built at the same time; as a result at
 # most njobs_multiplier*njobs jobs will run at the same time
 
+# CPU_ARCHITECTURE defaults to 'auto' but on my computers the architecture was not
+# recognized correctly by default (that could be because we're running in docker);
+# for best performance look at https://github.com/alicevision/AliceVision/blob/develop/src/cmake/OptimizeForArchitecture.cmake
+# to find the name of your CPU architecture; if yours isn't there then just pick the
+# latest predecessor that's available; for example, my laptop CPU is Tigerlake but
+# that's not available so I picked cannonlake instead (which is a predecessor of
+# tigerlake);
+
 # this image installs CUDA 12.6, which should be compatible with CUDA drivers
 # back to 525.60.13 (see https://docs.nvidia.com/deploy/cuda-compatibility/index.html
 # for more details)
