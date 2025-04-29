@@ -133,13 +133,6 @@ RUN git apply -C1 ../fix_importKnownPoses.patch
 COPY update_av_build_command.patch /build_directory/AliceVision
 RUN git apply -C1 ../update_av_build_command.patch
 
-WORKDIR /build_directory/AliceVision/build
-ARG njobs=1
-ARG CPU_ARCHITECTURE=auto
-RUN cmake -DALICEVISION_BUILD_DEPENDENCIES=ON -DAV_BUILD_POPSIFT=OFF \
-		 -DAV_USE_OPENMP=ON -DTARGET_ARCHITECTURE=${CPU_ARCHITECTURE} \
-		 -DAV_BUILD_DEPENDENCIES_PARALLEL=${njobs} \
-		 -DCMAKE_INSTALL_PREFIX=/usr/local -LH ../AliceVision
 
 # Install Boost 1.84.0
 
@@ -150,6 +143,15 @@ RUN wget https://sourceforge.net/projects/boost/files/boost/1.84.0/boost_1_84_0.
     cd boost_1_84_0 && \
     ./bootstrap.sh --prefix=/usr/local && \
     ./b2 -j${njobs} install
+	
+WORKDIR /build_directory/AliceVision/build
+ARG njobs=1
+ARG CPU_ARCHITECTURE=auto
+RUN cmake -DALICEVISION_BUILD_DEPENDENCIES=ON -DAV_BUILD_POPSIFT=OFF \
+		 -DAV_USE_OPENMP=ON -DTARGET_ARCHITECTURE=${CPU_ARCHITECTURE} \
+		 -DAV_BUILD_DEPENDENCIES_PARALLEL=${njobs} \
+		 -DCMAKE_INSTALL_PREFIX=/usr/local -LH ../AliceVision
+
 
 ARG njobs_multiplier=1
 RUN cmake --build . --parallel ${njobs_multiplier}
