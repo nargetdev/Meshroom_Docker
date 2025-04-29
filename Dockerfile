@@ -141,6 +141,14 @@ RUN cmake -DALICEVISION_BUILD_DEPENDENCIES=ON -DAV_BUILD_POPSIFT=OFF \
 		 -DAV_BUILD_DEPENDENCIES_PARALLEL=${njobs} \
 		 -DCMAKE_INSTALL_PREFIX=/usr/local -LH ../AliceVision
 
+# Install Boost 1.84.0
+WORKDIR /build_directory
+RUN wget https://boostorg.jfrog.io/artifactory/main/release/1.84.0/source/boost_1_84_0.tar.gz && \
+    tar -xzf boost_1_84_0.tar.gz && \
+    cd boost_1_84_0 && \
+    ./bootstrap.sh --prefix=/usr/local && \
+    ./b2 -j${njobs} install
+
 ARG njobs_multiplier=1
 RUN cmake --build . --parallel ${njobs_multiplier}
 
