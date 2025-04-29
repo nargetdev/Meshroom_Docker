@@ -142,8 +142,10 @@ RUN cmake -DALICEVISION_BUILD_DEPENDENCIES=ON -DAV_BUILD_POPSIFT=OFF \
 		 -DCMAKE_INSTALL_PREFIX=/usr/local -LH ../AliceVision
 
 # Install Boost 1.84.0
+
+RUN apt install -y wget
 WORKDIR /build_directory
-RUN wget https://boostorg.jfrog.io/artifactory/main/release/1.84.0/source/boost_1_84_0.tar.gz && \
+RUN wget https://sourceforge.net/projects/boost/files/boost/1.84.0/boost_1_84_0.tar.gz && \
     tar -xzf boost_1_84_0.tar.gz && \
     cd boost_1_84_0 && \
     ./bootstrap.sh --prefix=/usr/local && \
